@@ -32,6 +32,8 @@ module Wataridori
     end
 
     def post_relative_link?(link)
+      # Linkが切れていた場合は無視する
+      return false if link.is_a?(NilClass)
       link.start_with?('/posts/')
     end
 
@@ -54,6 +56,8 @@ module Wataridori
     end
 
     def query_url?(link)
+      # Linkが切れていた場合は無視する
+      return false if link.is_a?(NilClass)
       link.start_with?("https://#{from}.esa.io/#") ||
         link.start_with?("https://#{from}.esa.io/posts?")
     end
@@ -67,6 +71,8 @@ module Wataridori
     end
 
     def extract_post_number(link)
+      # Linkが切れていた場合は無視する
+      return nil if link.is_a?(NilClass)
       path = link.gsub("https://#{from}.esa.io", '')
       m = path.match(RELATIVE_POST_PATH)
       m ? m[1].to_i : nil
